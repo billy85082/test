@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="styles.css">
+   <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+   
+<meta charset="UTF-8">
+<title>非同步Servlet測試</title>
+
+<script type="text/javascript">
+	//使用DOM(Document Object Model)模式來取得這些標籤物件
+	//事件程序 可以委派給對應按鈕
+	function btnClick(id){
+		//alert('hi javascript');//呈現對話合
+		//1.進行遠端服務(Servlet)非同步(AJAX)請求--後端並行處理--callback回來?引發另一個程序更新畫面
+		//2.建立XMLHttpRequest/XMLHttpResponse物件 提出非同步
+		//var 區域變數定義
+		var xhr=new XMLHttpRequest();
+		
+		//alert(xhr);
+		//事前設計一個後面Servlet 處理callback程序(事件程序)\
+		//xhr.onreadystatechange=function(id){
+			//輪詢 後面在非同步處理 處理不同階段回傳一個狀態碼回來
+			//alert(xhr.readyState);
+			//if(xhr.readyState==4 && xhr.status==200){
+				//取出div標籤物件
+				switch(id){
+				case 10:
+					xhr.onreadystatechange=function(id){
+						if(xhr.readyState==4 && xhr.status==200){				
+							var div=document.getElementById('r3');
+							div.innerText=xhr.responseText;
+						}
+					};
+					break; 
+				case 3:
+					xhr.onreadystatechange=function(id){
+					if(xhr.readyState==4 && xhr.status==200){				
+						var div=document.getElementById('r1');
+						div.innerText=xhr.responseText;
+					}
+				};
+					break; 
+				case 5:
+					xhr.onreadystatechange=function(id){
+					if(xhr.readyState==4 && xhr.status==200){				
+						var div=document.getElementById('r5');
+						div.innerText=xhr.responseText;
+					}
+				};
+					break; 
+				}
+				//填上文字內容
+				//div.innerText=xhr.responseText;
+				
+			//}
+			//特定Http status code-200 才進行回乎回來的資料處理
+		//};
+		//設定採用哪一種傳送方式Http Request Method
+		xhr.open('GET','AsyncHelloServlet?who=Book&sec='+id*1000);
+		//正式提出請求
+		xhr.send();
+		
+		
+		}
+</script>	
+</head>
+<body>
+	<input type="button" value="請求(10秒)" id="btn3" onclick="btnClick(10)"/>
+	<div id="r3"></div>
+	<br/>
+	<input type="button" value="請求(3秒)" id="btn1" onclick="btnClick(3)"/>
+	<div id="r1"></div>
+	<br/>
+	<input type="button" value="請求(5秒)" id="btn5" onclick="btnClick(5)"/>
+	<div id="r5"></div>
+	<br/>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<taglib xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+    version="2.1">
+    
+  <description>Custom Tag Exaple</description>
+  <display-name>Eric Tag</display-name>
+  <tlib-version>1.0</tlib-version>
+  <short-name>eric</short-name>
+  <uri>http://www.eric.com.tw/tags</uri>
+
+  <!-- 自訂標籤 -->
+  <tag>
+  	<description>Hello World Tag</description>
+  	<name>helloTag</name>
+  	<tag-class>com.gjun.tagext.HelloTag</tag-class>
+  	<body-content>empty</body-content>
+  </tag>
+ 
+  <!-- 自訂圖形呈現標籤 -->
+  <tag>
+  	<description>圖形呈現標</description>
+  	<name>showPhoto</name>
+  	<tag-class>com.gjun.tagext.PhotoTag</tag-class>
+  	<body-content>empty</body-content>
+  	<!-- 屬性定義 -->
+  	<attribute>
+  		<description>圖形來源</description>
+  		<name>photoName</name>
+  		<required>true</required>
+  		<rtexprvalue>true</rtexprvalue>
+  		<type>java.lang.String</type>
+  	</attribute>
+  	
+  	<attribute>
+  		<description>圖形大小(small/middle/big)</description>
+  		<name>size</name>
+  		<required>true</required>
+  		<rtexprvalue>true</rtexprvalue>
+  		<type>java.lang.String</type>
+  	</attribute>
+  </tag>
+ 
+  <!-- simple body tag-->
+  <tag>
+  	<description>簡易型Body Tag</description>
+  	<name>helloBody</name>
+  	<tag-class>com.gjun.tagext.HelloBodyTag</tag-class>
+  	<body-content>JSP</body-content>  	
+  </tag>
+  
+  <!-- 採用Body Buffered處理自訂tag -->
+  <tag>
+  	<description>具有緩存body內容處理</description>
+  	<name>bodyProcess</name>
+  	<tag-class>com.gjun.tagext.HelloProcessBodyTagHandler</tag-class>
+  	<body-content>JSP</body-content>  	
+  </tag>
+</taglib>  

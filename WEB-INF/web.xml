@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+  <display-name>myweb</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  <!-- 應用系統的初始化參數 -->
+  <context-param>
+  	<param-name>application</param-name>
+  	<param-value>人事資源管理系統</param-value>
+  </context-param>
+  <context-param>
+  	<param-name>version</param-name>
+  	<param-value>2.0</param-value>
+  </context-param>
+  
+  <!-- 佈署一個HelloServlet 
+  	   第一個使用者請求物件初始化 後面不管多少請求 就只有這一個物件-->
+  <servlet>
+  	<servlet-name>hello</servlet-name>
+  	<servlet-class>com.gjun.view.HelloServlet</servlet-class>
+  </servlet>
+  <!-- 描述對外的端點位址 -->
+  <servlet-mapping>
+  	<servlet-name>hello</servlet-name>
+  	<url-pattern>/hello</url-pattern>
+  </servlet-mapping>
+  
+  <!-- 佈署一個Servlet 帶初始參數進去的 -->
+  <servlet>
+  	<servlet-name>initdemo</servlet-name>
+  	<servlet-class>com.gjun.view.LifeCycleServlet</servlet-class>
+    <!-- 配置參數 注入在ServletConfig物件內 傳遞給這一個Servlet -->
+    <init-param>
+    	<param-name>company</param-name>
+    	<param-value>巨匠電腦</param-value>
+    </init-param>
+    <init-param>
+    	<param-name>address</param-name>
+    	<param-value>新北市北新路</param-value>
+    </init-param>
+    <!-- 隨著應用系統進行初始化物件產生 -->
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <!-- 對外的位址 -->
+  <servlet-mapping>
+  	<servlet-name>initdemo</servlet-name>
+  	<url-pattern>/LifeCycleServlet</url-pattern>
+  </servlet-mapping>
+  <!-- 通用的Listener佈署 這種Listener部署 -->
+  <listener>
+	<listener-class>com.gjun.listener.ApplicationHandler</listener-class>
+  </listener>
+  
+  <!-- 佈署Filter -->
+  <!--<filter>
+  	<filter-name>auth</filter-name>
+  	<filter-class>com.gjun.filter.AuthorizationFilter</filter-class>
+  </filter> -->
+  <!-- 在哪個地方升起 -->
+  <!--<filter-mapping>
+  	<filter-name>auth</filter-name>
+  	<url-pattern>/acct/*</url-pattern>
+  </filter-mapping> -->
+  <!-- 配置Session組態 -->
+  <session-config>
+  	<session-timeout>10</session-timeout>
+  </session-config>
+  
+  <servlet>
+        <servlet-name>jersey-serlvet</servlet-name>
+        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+        <init-param>
+             <param-name>jersey.config.server.provider.packages</param-name>
+             <param-value>com.tibame.service</param-value>
+        </init-param>
+       	<load-on-startup>1</load-on-startup>
+       	<async-supported>true</async-supported>
+    </servlet>
+   
+    <servlet-mapping>
+        <servlet-name>jersey-serlvet</servlet-name>
+        <url-pattern>/api/*</url-pattern>
+    </servlet-mapping>
+  
+</web-app>
